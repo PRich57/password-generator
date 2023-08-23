@@ -1,3 +1,8 @@
+// Declare variables
+
+
+confirm("Are you sure?")
+
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
@@ -5,7 +10,6 @@ var generateBtn = document.querySelector("#generate");
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
-
   passwordText.value = password;
 
 }
