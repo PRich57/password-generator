@@ -176,14 +176,53 @@ function generatePassword() {
   // Assign array of boolean responses to var bools
   var bools = charTypes();
 
-
   // Assign bools array values to corresponding preferences keys
   preferences.isUpper = bools[0];
   preferences.isLower = bools[1];
   preferences.isNum = bools[2];
   preferences.isSpecial = bools[3];
 
-  console.log(preferences);
+  // Create function that uses preferences object to create password
+
+  // Create variable to hold random password
+  var randPass;
+
+  for (var i = 0; i < preferences.characters; i++) {
+    var rU = 0;
+    var rL = 0;
+    var rN = 0;
+    var rS = 0;
+
+    // For each true charType select at least one position in the password array
+    while (preferences.isUpper && rU < 1) {
+      var rU = Math.floor(Math.random() * uppercase.length);
+      rU++;
+      console.log(rU, uppercase[rU]);
+    } 
+
+    while (preferences.isLower && rL < 1) {
+      var rL = Math.floor(Math.random() * lowercase.length);
+      rL++;
+      console.log(rL, lowercase[rL]);
+    } 
+    
+    while (preferences.isNum && rN < 1) {
+      var rN = Math.floor(Math.random() * numbers.length);
+      rN++;
+      console.log(rN, numbers[rN]);
+    } 
+    
+    while (preferences.isSpecial && rS < 1) {
+      var rS = Math.floor(Math.random() * symbols.length);
+      rS++;
+      console.log(rS, symbols[rS]);
+    }
+    // Need to get these to return their values, this isn't right
+    return [rU.value, rL.value, rN.value, rS.value];
+  }
+  // Try to come up with a better method for this^^^^^ 
+
+
 }
 
 // Assignment Code
