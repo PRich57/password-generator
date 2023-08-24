@@ -173,11 +173,17 @@ function generatePassword() {
     }
   }
 
+  // Assign array of boolean responses to var bools
   var bools = charTypes();
 
-  console.log(bools);
 
-  // console.log(preferences.characters);
+  // Assign bools array values to corresponding preferences keys
+  preferences.isUpper = bools[0];
+  preferences.isLower = bools[1];
+  preferences.isNum = bools[2];
+  preferences.isSpecial = bools[3];
+
+  console.log(preferences);
 }
 
 // Assignment Code
