@@ -1,7 +1,7 @@
 // Declare variables
 
-// Declare passLength variable
-var passLength;
+// Declare randPassword variable
+var randPassword = "";
 
 // Declare variable for uppercase letters
 var uppercase = [
@@ -194,25 +194,36 @@ function generatePassword() {
 
     if (preferences.isUpper) {
       charArray.push(uppercase);
+      // Add 1 random char from each true charType
+      randPassword += Math.floor(Math.random() * uppercase.length)
     }
-
+    
     if (preferences.isLower) {
+      // Add 1 random char from each true charType
       charArray.push(lowercase);
     }
-
+    
     if (preferences.isNum) {
+      // Add 1 random char from each true charType
       charArray.push(numbers);
     }
-
+    
     if (preferences.isSpecial) {
+      // Add 1 random char from each true charType
       charArray.push(symbols);
     }
     return charArray;
   }
+  
+  console.log(pushArray());
 
   // Need to make a function that gives me at least one char from each sub-array in charArray
   function newPass() {
-    
+    for (var i = 0; i < preferences.characters; i++) {
+      if (preferences.isUpper) {
+        // Randomly assign remaining empty chars from entire charset
+      }
+    }
   }
 
 
