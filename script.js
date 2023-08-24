@@ -1,6 +1,7 @@
 // Declare variables
 
-// Declare password length
+// Declare passLength variable
+var passLength;
 
 // Declare variable for uppercase letters
 var uppercase = [
@@ -100,54 +101,83 @@ var symbols = [
   "~",
 ];
 
-var passLength;
-
 // Create the generatePassword function called in writePassword
 function generatePassword() {
-  
+  // Declare object to store user preferences
+  var preferences = {
+    // Number of characters
+    characters: 0,
+
+    // Boolean for upper, lower, num, special
+    isUpper: true,
+    isLower: true,
+    isNum: true,
+    isSpecial: true,
+  };
+
   // Create function to prompt user for password length
   function userLength() {
     var x = prompt(
       "How many characters should I include in your password? Must be a number from 8 to 128."
     );
 
-    // Assign value of x to passLength to maintain x's value else if alert
-    var m = x;
-
-    // Cast passLength as number if possible
-    Number(m);
-    
     // Check for proper usage
-    if (m < 8 || m > 128) {
+    if (x < 8 || x > 128) {
       alert("You must choose a number in the range of 8 to 128. Try again.");
-      userLength();
-    } else if (isNaN(m)) {
+      generatePassword();
+    } else if (isNaN(x)) {
       alert(
         x + " is not a number. You must enter a number in the range of 8 to 128"
       );
-      userLength();
+      generatePassword();
     } else {
-      return m;
+      Number(x);
+      return x;
     }
-  };
+  }
 
   // Assign accepted userLength value to passLength
-  var passLength = userLength();
+  preferences.characters = userLength();
 
   // Prompt user for character types
-  
-  
-  // Declare object to store user preferences
-  var preferences = {
-    // Number of characters
-    characters: passLength,
-    // Boolean for upper, lower, num, special
-    isUpper: true,
-    // isLower: lower,
-    // isNum: num,
-    // isSpecial: special,
-  };
-  console.log(preferences.characters);
+  function charTypes() {
+    // Confirm use of uppercase
+    var u = confirm(
+      "Click OK if you would like to include uppercase letters in your password."
+    );
+
+    // Confirm use of lowercase
+    var l = confirm(
+      "Click OK if you would like to include lowercase letters in your password."
+    );
+
+    // Confirm use of numbers
+    var n = confirm(
+      "Click OK if you would like to include numbers in your password."
+    );
+
+    // Confirm use of special characters
+    var s = confirm(
+      "Click OK if you would like to include special characters in your password."
+    );
+
+    // Check for correct usage
+    if (u === false && l === false && n === false && s === false) {
+      alert(
+        "You must choose at least one type of character to include in your password. Try again."
+      );
+      charTypes();
+      return;
+    } else {
+      return [u, l, n, s];
+    }
+  }
+
+  var bools = charTypes();
+
+  console.log(bools);
+
+  // console.log(preferences.characters);
 }
 
 // Assignment Code
