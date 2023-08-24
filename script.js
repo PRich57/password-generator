@@ -112,44 +112,43 @@ function generatePassword() {
     );
 
     // Assign value of x to passLength to maintain x's value else if alert
-    var passLength = x;
+    var m = x;
 
     // Cast passLength as number if possible
-    Number(passLength);
+    Number(m);
     
     // Check for proper usage
-    if (passLength < 8 || passLength > 128) {
+    if (m < 8 || m > 128) {
       alert("You must choose a number in the range of 8 to 128. Try again.");
       userLength();
-    } else if (isNaN(passLength)) {
+    } else if (isNaN(m)) {
       alert(
         x + " is not a number. You must enter a number in the range of 8 to 128"
       );
       userLength();
     } else {
-      return passLength;
+      return m;
     }
   };
 
-  console.log(passLength);
+  // Assign accepted userLength value to passLength
+  var passLength = userLength();
 
-  // Call userLength
-  userLength();
-
-  // Create function for replacing values of preferences object
-  function getPrefs() {}
+  // Prompt user for character types
+  
+  
+  // Declare object to store user preferences
+  var preferences = {
+    // Number of characters
+    characters: passLength,
+    // Boolean for upper, lower, num, special
+    isUpper: true,
+    // isLower: lower,
+    // isNum: num,
+    // isSpecial: special,
+  };
+  console.log(preferences.characters);
 }
-
-// Declare object to store user preferences
-var preferences = {
-  // Number of characters
-  // characters: ,
-  // Boolean for upper, lower, num, special
-  // isUpper: upper,
-  // isLower: lower,
-  // isNum: num,
-  // isSpecial: special,
-};
 
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
