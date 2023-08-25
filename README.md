@@ -4,7 +4,7 @@
 
 The purpose of this Random Password Generator is to give users a mew password they can use to secure any account. Users can specify parameters for the generator to adhere to when creating the new password. Passwords can contain any number of characters from 8 up to 128 and can use uppercase letters, lowercase letters, numbers, and/or special characters depending the user's preferences.
 
-The live site can be accessed by clicking [here!](prich57.github.io/password-generator)
+The live site can be accessed by clicking [here!](https://prich57.github.io/password-generator/)
 
 ## Installation
 
