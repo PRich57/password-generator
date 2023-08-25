@@ -7,6 +7,7 @@ var preferences = {
   isLower: false,
   isNum: false,
   isSpecial: false,
+  confirmed: false,
 };
 
 // Declare randPassword variable
@@ -111,25 +112,24 @@ var symbols = [
 
 // Create the generatePassword function called in writePassword
 function generatePassword() {
-  
   // Prompt user for password length
-    var x = prompt(
-      "How many characters should I include in your password? Must be a number from 8 to 128."
-    );
+  var x = prompt(
+    "How many characters should I include in your password? Must be a number from 8 to 128."
+  );
 
-    // Check for proper usage
-    if (x < 8 || x > 128) {
-      alert("You must choose a number in the range of 8 to 128. Try again.");
-      generatePassword();
-    } else if (isNaN(x)) {
-      alert(
-        x + " is not a number. You must enter a number in the range of 8 to 128"
-      );
-      generatePassword();
-    } else {
-      Number(x);
-      preferences.characters = x;
-    }
+  // Check for proper usage
+  if (x < 8 || x > 128) {
+    alert("You must choose a number in the range of 8 to 128. Try again.");
+    generatePassword();
+  } else if (isNaN(x)) {
+    alert(
+      x + " is not a number. You must enter a number in the range of 8 to 128"
+    );
+    generatePassword();
+  } else {
+    Number(x);
+    preferences.characters = x;
+  }
 
   // Confirm use of uppercase
   preferences.isUpper = confirm(
@@ -161,6 +161,26 @@ function generatePassword() {
     alert(
       "You must choose at least one type of character to include in your password. Try again."
     );
+    generatePassword();
+  }
+
+  // Validate responses
+  preferences.confirmed = confirm(
+    "You have selected: \n\t" +
+      preferences.characters +
+      " characters. \n" +
+      "\tInclude Uppercase:  " +
+      preferences.isUpper +
+      " \n\tInclude Lowercase:  " +
+      preferences.isLower +
+      " \n\tInclude Numbers:  " +
+      preferences.isNum +
+      " \n\tInclude Special Characters:  " +
+      preferences.isSpecial +
+      " \nAre you satisfied with these selections?"
+  );
+  if (!preferences.confirmed) {
+    alert("Let's try again");
     generatePassword();
   }
 
