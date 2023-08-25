@@ -1,5 +1,14 @@
 // Declare variables
 
+// Declare object to store user preferences
+var preferences = {
+  characters: 0,
+  isUpper: false,
+  isLower: false,
+  isNum: false,
+  isSpecial: false,
+};
+
 // Declare randPassword variable
 var randPassword = "";
 
@@ -68,7 +77,6 @@ var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
 // Declare variable for special characters
 var symbols = [
-  " ",
   "!",
   '"',
   "#",
@@ -101,22 +109,10 @@ var symbols = [
   "~",
 ];
 
-// Declare object to store user preferences
-var preferences = {
-  // Number of characters
-  characters: 0,
-
-  // Boolean for upper, lower, num, special
-  isUpper: true,
-  isLower: true,
-  isNum: true,
-  isSpecial: true,
-};
-
 // Create the generatePassword function called in writePassword
 function generatePassword() {
-  // Create function to prompt user for password length
-  function userLength() {
+  
+  // Prompt user for password length
     var x = prompt(
       "How many characters should I include in your password? Must be a number from 8 to 128."
     );
@@ -132,135 +128,101 @@ function generatePassword() {
       generatePassword();
     } else {
       Number(x);
-      return x;
+      preferences.characters = x;
     }
+
+  // Confirm use of uppercase
+  preferences.isUpper = confirm(
+    "Click OK if you would like to include uppercase letters in your password."
+  );
+
+  // Confirm use of lowercase
+  preferences.isLower = confirm(
+    "Click OK if you would like to include lowercase letters in your password."
+  );
+
+  // Confirm use of numbers
+  preferences.isNum = confirm(
+    "Click OK if you would like to include numbers in your password."
+  );
+
+  // Confirm use of special characters
+  preferences.isSpecial = confirm(
+    "Click OK if you would like to include special characters in your password."
+  );
+
+  // Check for correct usage
+  if (
+    !preferences.isUpper &&
+    !preferences.isLower &&
+    !preferences.isNum &&
+    !preferences.isSpecial
+  ) {
+    alert(
+      "You must choose at least one type of character to include in your password. Try again."
+    );
+    generatePassword();
   }
-
-  // Assign accepted userLength value to passLength
-  preferences.characters = userLength();
-
-  // Prompt user for character types
-  function charTypes() {
-    // Confirm use of uppercase
-    var u = confirm(
-      "Click OK if you would like to include uppercase letters in your password."
-    );
-
-    // Confirm use of lowercase
-    var l = confirm(
-      "Click OK if you would like to include lowercase letters in your password."
-    );
-
-    // Confirm use of numbers
-    var n = confirm(
-      "Click OK if you would like to include numbers in your password."
-    );
-
-    // Confirm use of special characters
-    var s = confirm(
-      "Click OK if you would like to include special characters in your password."
-    );
-
-    // Check for correct usage
-    if (u === false && l === false && n === false && s === false) {
-      alert(
-        "You must choose at least one type of character to include in your password. Try again."
-      );
-      charTypes();
-      return;
-    } else {
-      return [u, l, n, s];
-    }
-  }
-
-  // Assign array of boolean responses to var bools
-  var bools = charTypes();
-
-  // Assign bools array values to corresponding preferences keys
-  preferences.isUpper = bools[0];
-  preferences.isLower = bools[1];
-  preferences.isNum = bools[2];
-  preferences.isSpecial = bools[3];
-
-  console.log(preferences.isUpper);
-  console.log(preferences.isLower);
-  console.log(preferences.isNum);
-  console.log(preferences.isSpecial);
 
   // Create function that uses preferences object to create password
   function pushArray() {
-    // Create variable to push other arrays into if true
+    // Declare result variable inside the function so it resets anytime the function is called again
+    var result = "";
+
+    // Declare empty array variable to push other arrays into if true
     charArray = [];
 
+    // If isUpper is true then push uppercase letters to the charArray
     if (preferences.isUpper) {
       charArray.push(uppercase);
-      // Add 1 random char from each true charType
-      randPassword += Math.floor(Math.random() * uppercase.length)
+      // Create another variable to store the result of math because it will output and index not the value at that index
+      var upper1 = Math.floor(Math.random() * uppercase.length);
+      // Update the current value of result to the value at the random index in the uppercase array
+      result += uppercase[upper1];
     }
-    
+
+    // If isLower is true repeat the process above
     if (preferences.isLower) {
-      // Add 1 random char from each true charType
       charArray.push(lowercase);
+      // This is done for each true preference so we know there is a guarantee of at least one char for each selected char type
+      var lower1 = Math.floor(Math.random() * lowercase.length);
+      result += lowercase[lower1];
     }
-    
+
+    // If true repeat the process above
     if (preferences.isNum) {
-      // Add 1 random char from each true charType
       charArray.push(numbers);
+      var num1 = Math.floor(Math.random() * numbers.length);
+      result += numbers[num1];
     }
-    
+
+    // If true repeat the process above
     if (preferences.isSpecial) {
-      // Add 1 random char from each true charType
       charArray.push(symbols);
+      var symbol1 = Math.floor(Math.random() * symbols.length);
+      result += symbols[symbol1];
     }
-    return charArray;
-  }
-  
-  console.log(pushArray());
 
-  // Need to make a function that gives me at least one char from each sub-array in charArray
-  function newPass() {
-    for (var i = 0; i < preferences.characters; i++) {
-      if (preferences.isUpper) {
-        // Randomly assign remaining empty chars from entire charset
-      }
+    // Create remainder variable to hold the length of result because it'll be needed in the for loop and we don't want to increment a value that we're using as a condition
+    var remainder = result.length;
+
+    // Create a variable to store the flattened array of all char types requested in password
+    var arrayCombine = charArray.flat(1);
+
+    // For each remaining available index in the new password add a random character from the list of all relevant char types
+    for (var i = 0; i < preferences.characters - remainder; i++) {
+      // Store the index value for each randomization
+      var arrayIndex = Math.floor(Math.random() * arrayCombine.length);
+      // Get the value at the index above
+      result += arrayCombine[arrayIndex];
     }
+    // Return result
+    return result;
   }
+  // Assign the returned value from the pushArray function to resultPassword
+  randPassword = pushArray();
 
-
-  // for (var i = 0; i < preferences.characters; i++) {
-  //   var rU = 0;
-  //   var rL = 0;
-  //   var rN = 0;
-  //   var rS = 0;
-
-  //   // For each true charType select at least one position in the password array
-  //   while (preferences.isUpper && rU < 1) {
-  //     var rU = Math.floor(Math.random() * uppercase.length);
-  //     rU++;
-  //     console.log(rU, uppercase[rU]);
-  //   }
-
-  //   while (preferences.isLower && rL < 1) {
-  //     var rL = Math.floor(Math.random() * lowercase.length);
-  //     rL++;
-  //     console.log(rL, lowercase[rL]);
-  //   }
-
-  //   while (preferences.isNum && rN < 1) {
-  //     var rN = Math.floor(Math.random() * numbers.length);
-  //     rN++;
-  //     console.log(rN, numbers[rN]);
-  //   }
-
-  //   while (preferences.isSpecial && rS < 1) {
-  //     var rS = Math.floor(Math.random() * symbols.length);
-  //     rS++;
-  //     console.log(rS, symbols[rS]);
-  //   }
-  //   // Need to get these to return their values, this isn't right
-  //   return [rU.value, rL.value, rN.value, rS.value];
-  // }
-  // // Try to come up with a better method for this^^^^^
+  return randPassword;
 }
 
 // Assignment Code
