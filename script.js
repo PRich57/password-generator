@@ -120,12 +120,12 @@ function generatePassword() {
   // Check for proper usage
   if (x < 8 || x > 128) {
     alert("You must choose a number in the range of 8 to 128. Try again.");
-    generatePassword();
+    return generatePassword();
   } else if (isNaN(x)) {
     alert(
       x + " is not a number. You must enter a number in the range of 8 to 128"
     );
-    generatePassword();
+    return generatePassword();
   } else {
     Number(x);
     preferences.characters = x;
@@ -161,7 +161,7 @@ function generatePassword() {
     alert(
       "You must choose at least one type of character to include in your password. Try again."
     );
-    generatePassword();
+    return generatePassword();
   }
 
   // Validate responses
@@ -181,7 +181,7 @@ function generatePassword() {
   );
   if (!preferences.confirmed) {
     alert("Let's try again");
-    generatePassword();
+    return generatePassword();
   }
 
   // Create function that uses preferences object to create password
